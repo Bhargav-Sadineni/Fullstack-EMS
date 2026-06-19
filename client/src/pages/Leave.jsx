@@ -3,7 +3,7 @@
 const Leave = () => {
   return (
     <div>
-      
+      leave
     </div>
   )
 }

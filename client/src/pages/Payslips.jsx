@@ -3,7 +3,7 @@
 const Payslips = () => {
   return (
     <div>
-      
+      slip
     </div>
   )
 }
