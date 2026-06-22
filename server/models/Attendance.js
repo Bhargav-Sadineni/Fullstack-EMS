@@ -48,7 +48,7 @@
   },
   { timestamps: true }
 );
-
+// comment
 attendanceSchema.index({employeeId:1,date:1},{unique:true})
  
  const Attendance =
