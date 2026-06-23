@@ -145,8 +145,10 @@ const attendanceRemainderCron = inngest.createFunction(
 
     // Step 6: Send reminder emails
     if(absentEmployees.length > 0){
+        // changed some thing remember
+        // const emailPromises = absentEmployees.map((emp)=> {
         await step.run("send-reminder-emails", async ()=>{
-            const emailPromises = absentEmployees.map((emp)=> {
+             const emailPromises = absentEmployees.map((emp)=> {
                 // send email
                 sendEmail({
                     to:emp.email,
@@ -157,6 +159,7 @@ const attendanceRemainderCron = inngest.createFunction(
         })
     }
 
+    await Promise.all(emailPromises)
     return {totalActive: activeEmployees.length,
         onLeave:onLeaveIds.length,
         checkedIn:checkedInIds.length,

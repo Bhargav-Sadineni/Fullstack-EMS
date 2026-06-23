@@ -15,6 +15,7 @@ export const login = async (req,res) =>{
 
         const user = await User.findOne({email})
         if(!user){
+            console.log("User not found");
             return res.status(401).json({error: "Invalid credentials"});
         }
 
@@ -23,6 +24,7 @@ export const login = async (req,res) =>{
 
         }
         if(role_type === "employee" && user.role !== "EMPLOYEE"){
+            
             return res.status(401).json({error:"Not authorized as employee"});
 
         }
@@ -45,7 +47,7 @@ export const login = async (req,res) =>{
         return res.json({user:payload, token})
     } catch (error) {
         console.error("Login error:",error);
-        return res.status(500),json({error:"Login failed"})
+        return res.status(500).json({error:"Login failed"})
     }
 }
 
@@ -71,7 +73,7 @@ export const changePassword = async (req,res) =>{
         if(!user) return res.status(404).json({
             error:"User not found"
         });
-        const isValid = await bcrypt.compare(changePassword, user.password);
+        const isValid = await bcrypt.compare(currentPassword, user.password);
         if(!isValid) return res.status(400).json({
             error:"Current password is incorrect"
         })

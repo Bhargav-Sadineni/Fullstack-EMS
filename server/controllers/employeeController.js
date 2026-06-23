@@ -11,7 +11,7 @@ export const getEmployees = async (req,res)=>{
         const where = {};
         if(department) where.department = department;
 
-        const employees = (await Employee.find(where)).toSorted({createdAt: -1}).populate("userId","email role").lean();
+        const employees = await Employee.find(where).sort({createdAt: -1}).populate("userId","email role").lean();
 
         const result = employees.map((emp)=>({
             ...emp,
@@ -64,7 +64,7 @@ export const createEmployee = async (req,res)=>{
             })
         }
         console.error("Create employee error:",error)
-        return res.status(500),json({
+        return res.status(500).json({
             error:"Failed to create employee"
         })
     }
@@ -82,7 +82,7 @@ export const updateEmployee = async (req,res)=>{
 
         
         await Employee.findByIdAndUpdate(id,{
-            userId: user._id,
+            
             firstName,
             lastName,
             email,
@@ -109,7 +109,7 @@ export const updateEmployee = async (req,res)=>{
                 error:"Email already exists"
             })
         }
-        return res.status(500),json({
+        return res.status(500).json({
             error:"Failed to update employee"
         })
     }
