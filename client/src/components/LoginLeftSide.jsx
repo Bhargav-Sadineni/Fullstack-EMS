@@ -17,7 +17,10 @@ const LoginLeftSide = () => {
       Streamline your workforce operations,
       track attendance, manage payroll, and
       empower your team securely.
+      
       </p>
+      <p>admin email:sadinenibhargav0@gmail.com</p>
+      <p>admin password:admin123</p>
     </div>
 
   </div>
