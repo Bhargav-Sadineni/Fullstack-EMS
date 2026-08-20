@@ -66,7 +66,7 @@ const employeeSchema = new mongoose.Schema({
     type:String,
     default:""
   },
-  departments:{
+  department:{
     type:String,
     enum: DEPARTMENTS, 
   }

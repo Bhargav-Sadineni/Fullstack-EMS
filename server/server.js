@@ -11,6 +11,10 @@ import leaveRouter from "./routes/leaveRoutes.js"
 import payslipRouter from "./routes/payslipsRoutes.js"
 import dashboardRouter from "./routes/dashboardRoutes.js"
 
+import chatbotRouter from "./routes/chatbotRoutes.js"
+// ...
+
+
 import { serve } from "inngest/express";
 import { inngest, functions } from "./inngest/index.js"
 
@@ -32,6 +36,8 @@ app.use("/api/attendance",attendanceRouter)
 app.use("/api/leave",leaveRouter)
 app.use("/api/payslips",payslipRouter)
 app.use("/api/dashboard",dashboardRouter)
+
+app.use("/api/chatbot", chatbotRouter)
 
 
 // Set up the "/api/inngest" (recommended) routes with the serve handler
