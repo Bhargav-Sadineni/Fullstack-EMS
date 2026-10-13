@@ -1,0 +1,17 @@
+{
+  "name": "fullstack-ems-backend",
+  "version": "2.0.0",
+  "description": "Fullstack Employee Management System - Distributed Microservices Backend",
+  "type": "module",
+  "scripts": {
+    "start": "node orchestrator.js",
+    "dev": "node orchestrator.js",
+    "seed": "node scripts/seed.js",
+    "install:all": "node scripts/install-all.js",
+    "test": "node scripts/test-all-services.js",
+    "test:dlq": "node scripts/test-dlq.js"
+  },
+  "dependencies": {
+    "dotenv": "^17.4.2"
+  }
+}
