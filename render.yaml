@@ -1,0 +1,32 @@
+services:
+  - type: web
+    name: fullstack-ems-backend
+    runtime: node
+    plan: free
+    rootDir: backend
+    buildCommand: node scripts/install-all.js
+    startCommand: node orchestrator.js
+    healthCheckPath: /api/auth/profile
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 10000
+      - key: MONGODB_URI
+        sync: false
+      - key: JWT_SECRET
+        sync: false
+      - key: ADMIN_EMAIL
+        sync: false
+      - key: REDIS_URI
+        sync: false
+      - key: RABBITMQ_URI
+        sync: false
+      - key: GEMINI_API_KEY
+        sync: false
+      - key: SMTP_USER
+        sync: false
+      - key: SMTP_PASS
+        sync: false
+      - key: SENDER_EMAIL
+        sync: false

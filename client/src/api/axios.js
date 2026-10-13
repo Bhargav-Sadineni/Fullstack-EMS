@@ -1,8 +1,10 @@
 import axios from "axios";
 
+const rawBaseUrl = import.meta.env.VITE_BASE_URL || "http://localhost:4000";
+
 const api = axios.create({
-    baseURL: (import.meta.env.VITE_BASE_URL || "http://localhost:4000") + "/api"
-})
+    baseURL: `${rawBaseUrl.replace(/\/+$/, "")}/api`
+});
 
 
 // Attach Auth token to all network requests

@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "start": "node orchestrator.js",
+    "build": "node scripts/install-all.js",
     "dev": "node orchestrator.js",
     "seed": "node scripts/seed.js",
     "install:all": "node scripts/install-all.js",

@@ -201,7 +201,7 @@ app.use("/api/notifications", createProxyMiddleware({
   pathRewrite: { "^/api/notifications": "" },
 }));
 
-app.listen(PORT, () => {
+app.listen(PORT, "0.0.0.0", () => {
   console.log(`🌐 [API Gateway] running on port ${PORT}`);
   console.log(`⚡ Routing table:`);
   console.log(`   /api/auth          -> ${SERVICES.auth}`);

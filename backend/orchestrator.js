@@ -19,6 +19,8 @@ if (fs.existsSync(rootEnvPath)) {
   console.log(" Loaded credentials from backend/.env");
 }
 
+const publicGatewayPort = process.env.PORT || 4000;
+
 const SERVICES = [
   { name: "AUTH", dir: "services/auth-service", port: 4001, color: "\x1b[35m" },
   { name: "EMPLOYEE", dir: "services/employee-service", port: 4002, color: "\x1b[36m" },
@@ -26,14 +28,14 @@ const SERVICES = [
   { name: "NOTIFICATION", dir: "services/notification-service", port: 4004, color: "\x1b[32m" },
   { name: "PAYROLL", dir: "services/payroll-service", port: 4005, color: "\x1b[34m" },
   { name: "CHATBOT", dir: "services/chatbot-service", port: 4006, color: "\x1b[95m" },
-  { name: "GATEWAY", dir: "services/api-gateway", port: 4000, color: "\x1b[31m" },
+  { name: "GATEWAY", dir: "services/api-gateway", port: publicGatewayPort, color: "\x1b[31m" },
 ];
 
 const RESET = "\x1b[0m";
 const children = [];
 
 console.log("==================================================================");
-console.log("   Fullstack-EMS Microservices Orchestrator (Local Development)   ");
+console.log(`   Fullstack-EMS Microservices Orchestrator (Gateway Port: ${publicGatewayPort})   `);
 console.log("==================================================================");
 
 // Function to start a single microservice
@@ -41,8 +43,8 @@ function startService(svc) {
   const fullPath = path.join(__dirname, svc.dir);
   
   const env = {
-    ...process.env,
     ...baseEnv,
+    ...process.env,
     PORT: svc.port.toString(),
     AUTH_SERVICE_URL: "http://localhost:4001",
     EMPLOYEE_SERVICE_URL: "http://localhost:4002",

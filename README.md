@@ -286,3 +286,52 @@ SENDER_EMAIL="sadinenibhargav0@gmail.com"
 # AI Chatbot
 GEMINI_API_KEY="your_gemini_api_key_here"
 ```
+
+---
+
+## 🚀 Production Deployment Guide
+
+### 1. Backend Deployment on Render (Web Service)
+
+The backend runs all distributed microservices orchestrated behind the unified API Gateway, which binds to Render's dynamic `PORT` on `0.0.0.0`.
+
+1. Go to your [Render Dashboard](https://dashboard.render.com/) and click **New +** &rarr; **Web Service**.
+2. Connect your GitHub repository: `Bhargav-Sadineni/Fullstack-EMS`.
+3. Fill in the service configuration:
+   * **Name**: `fullstack-ems-backend`
+   * **Root Directory**: `backend`
+   * **Runtime**: `Node`
+   * **Build Command**: `node scripts/install-all.js`
+   * **Start Command**: `node orchestrator.js`
+   * **Instance Type**: Free or Starter
+4. Scroll to **Environment Variables** and add the following keys:
+   * `NODE_ENV`: `production`
+   * `MONGODB_URI`: Your MongoDB Atlas connection string
+   * `JWT_SECRET`: A strong secret string (e.g., `super_secret_jwt_key_ems_2026`)
+   * `ADMIN_EMAIL`: `sadinenibhargav0@gmail.com`
+   * `REDIS_URI`: *(Optional)* Your Upstash Redis connection string
+   * `RABBITMQ_URI`: *(Optional)* Your CloudAMQP RabbitMQ connection string
+   * `GEMINI_API_KEY`: *(Optional)* Your Google Gemini AI API key
+   * `SMTP_USER`, `SMTP_PASS`, `SENDER_EMAIL`: *(Optional)* Your Brevo SMTP credentials
+5. Click **Create Web Service**.
+6. Once deployed, copy your Render Web Service URL (e.g., `https://fullstack-ems-backend.onrender.com`).
+
+> **Tip (Render Blueprint)**: You can also use the included [render.yaml](file:///c:/Notes%20and%20pdf/web%20development%20projects/Fullstack-EMS/render.yaml) file for automated 1-click blueprint deployment.
+
+---
+
+### 2. Frontend Deployment on Vercel
+
+1. Go to your [Vercel Dashboard](https://vercel.com/dashboard) and click **Add New...** &rarr; **Project**.
+2. Import your GitHub repository: `Bhargav-Sadineni/Fullstack-EMS`.
+3. In the project setup screen, configure the following:
+   * **Framework Preset**: `Vite`
+   * **Root Directory**: Click **Edit** and select `client`
+   * **Build Command**: `npm run build`
+   * **Output Directory**: `dist`
+4. Expand **Environment Variables** and add:
+   * **Key**: `VITE_BASE_URL`
+   * **Value**: Your Render Backend URL from Step 1 (e.g., `https://fullstack-ems-backend.onrender.com`)
+5. Click **Deploy**.
+6. Vercel will install dependencies, build the Vite bundle, and deploy the application with single-page routing rewrites enabled via [client/vercel.json](file:///c:/Notes%20and%20pdf/web%20development%20projects/Fullstack-EMS/client/vercel.json).
+
