@@ -202,15 +202,25 @@ npm run docker:down
 
 ## 🖼️ Application Screenshots
 
-Place project captures in the `docs/screenshots/` folder:
+### 1. Admin Dashboard (Gateway Aggregator)
+Assembles live metrics across Employee, Attendance, and Leave microservices in real-time without chatty client round-trips.
+![Admin Dashboard](docs/screenshots/admin-dashboard.png)
 
-| Screen | File Path | Description |
-| :--- | :--- | :--- |
-| **Admin Login** | `docs/screenshots/admin-login.png` | Admin authentication portal with role verification |
-| **Admin Dashboard** | `docs/screenshots/admin-dashboard.png` | Gateway Aggregator assembling live metrics across services |
-| **Leave Management** | `docs/screenshots/leave-management.png` | Microservice API Composition displaying enriched applicant names |
-| **Employee Directory** | `docs/screenshots/employee-directory.png` | High-speed directory backed by Upstash Redis Cache (`X-Cache: HIT`) |
-| **Health Dashboard** | `docs/screenshots/health-dashboard.png` | Real-time `/health` dashboard showing live status of all 6 services |
+### 2. Employee Directory (Upstash Redis Cache-Aside)
+Sub-millisecond retrieval with real-time search and department filtering backed by Upstash Redis (`X-Cache: HIT`).
+![Employee Directory](docs/screenshots/employee-directory.png)
+
+### 3. Employee Details & Management Modal
+Interactive modal opened upon clicking an employee card, displaying contact details, compensation structure, biography, and quick edit/delete actions.
+![Employee Detail Modal](docs/screenshots/employee-details-modal.png)
+
+### 4. Leave Management (API Composition & Search)
+Real-time leave application requests enriched with employee names, applicant search, status filters, and instant approval workflow.
+![Leave Management](docs/screenshots/leave-management.png)
+
+### 5. Payslips Management (Search, Auto-Fill & PDF Generation)
+Searchable payslip records by employee name or department with instant PDF download actions.
+![Payslip Management](docs/screenshots/payslip-management.png)
 
 ---
 
