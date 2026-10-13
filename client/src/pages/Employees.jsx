@@ -3,6 +3,7 @@ import { dummyEmployeeData, DEPARTMENTS } from "../assets/assets"
 import { Plus, Search, X } from "lucide-react"
 import EmployeeCard from "../components/EmployeeCard"
 import EmployeeForm from "../components/EmployeeForm"
+import EmployeeDetailModal from "../components/EmployeeDetailModal"
 import api from "../api/axios"
 
 
@@ -14,6 +15,7 @@ const Employees = () => {
     const [selectDept,setSelectDept] = useState("")
 
     const [editEmployee,setEditEmployee] = useState(null)
+    const [selectedEmployeeDetails, setSelectedEmployeeDetails] = useState(null)
     const [showCreateModal, setShowCreateModal] = useState(false)
     
 
@@ -86,7 +88,15 @@ const Employees = () => {
                 <p className="col-span-full text-center py-16 text-slate-400 bg-white rounded-2xl border border-dashed border-slate-200">
                 No employees found</p>
             ):(
-                filtered.map((emp)=><EmployeeCard key={emp.id} employee={emp} onDelete={fetchEmployees} onEdit={(e)=> setEditEmployee(e)} />)
+                filtered.map((emp)=>(
+                  <EmployeeCard 
+                    key={emp.id || emp._id} 
+                    employee={emp} 
+                    onDelete={fetchEmployees} 
+                    onEdit={(e)=> setEditEmployee(e)} 
+                    onViewDetails={(e) => setSelectedEmployeeDetails(e)}
+                  />
+                ))
             )}
         </div>
       )}
@@ -168,6 +178,21 @@ const Employees = () => {
 
         </div>
       )}
+
+      {/* Employee Detail Modal */}
+      <EmployeeDetailModal
+        isOpen={!!selectedEmployeeDetails}
+        employee={selectedEmployeeDetails}
+        onClose={() => setSelectedEmployeeDetails(null)}
+        onEdit={(emp) => {
+          setSelectedEmployeeDetails(null);
+          setEditEmployee(emp);
+        }}
+        onDeleteSuccess={() => {
+          setSelectedEmployeeDetails(null);
+          fetchEmployees();
+        }}
+      />
     </div>
   )
 }

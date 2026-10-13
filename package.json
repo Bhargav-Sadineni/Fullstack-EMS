@@ -1,0 +1,22 @@
+{
+  "name": "fullstack-ems-root",
+  "version": "2.0.0",
+  "description": "Fullstack Employee Management System - Distributed Microservices Architecture",
+  "type": "module",
+  "scripts": {
+    "dev": "node orchestrator.js",
+    "dev:backend": "cd backend && npm run dev",
+    "dev:client": "cd client && npm run dev",
+    "dev:monolith": "cd server && npm start",
+    "start": "node orchestrator.js",
+    "install:all": "cd backend && npm run install:all && cd ../client && npm install",
+    "docker:up": "docker compose -f infra/docker-compose.yml up --build",
+    "docker:down": "docker compose -f infra/docker-compose.yml down",
+    "seed": "cd backend && npm run seed",
+    "test": "cd backend && npm test",
+    "test:dlq": "cd backend && npm run test:dlq"
+  },
+  "dependencies": {
+    "dotenv": "^17.4.2"
+  }
+}
