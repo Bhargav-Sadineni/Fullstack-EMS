@@ -200,17 +200,63 @@ npm run docker:down
 
 ---
 
-## 🖼️ Application Screenshots
+## 🖼️ Application Screenshots & Feature Walkthrough
 
-Place project captures in the `docs/screenshots/` folder:
+### 👑 Admin Portal (Platform Management & Aggregation)
 
-| Screen | File Path | Description |
-| :--- | :--- | :--- |
-| **Admin Login** | `docs/screenshots/admin-login.png` | Admin authentication portal with role verification |
-| **Admin Dashboard** | `docs/screenshots/admin-dashboard.png` | Gateway Aggregator assembling live metrics across services |
-| **Leave Management** | `docs/screenshots/leave-management.png` | Microservice API Composition displaying enriched applicant names |
-| **Employee Directory** | `docs/screenshots/employee-directory.png` | High-speed directory backed by Upstash Redis Cache (`X-Cache: HIT`) |
-| **Health Dashboard** | `docs/screenshots/health-dashboard.png` | Real-time `/health` dashboard showing live status of all 6 services |
+#### 1. Admin Dashboard (Gateway Aggregator Pattern)
+* **What you see**: A unified bird's-eye view displaying Total Employees, Departments, Today's Attendance, and Pending Leaves.
+* **Under the Hood**: The API Gateway executes parallel HTTP queries via `Promise.allSettled` to the Employee, Attendance, and Leave microservices, synthesizing the stats into a single fast payload without client-side waterfalls.
+![Admin Dashboard](docs/screenshots/admin-dashboard.png)
+
+#### 2. Employee Directory (Upstash Redis Cache-Aside)
+* **What you see**: High-speed employee cards with live department filtering and name search.
+* **Under the Hood**: Uses Upstash Redis caching (`employee:list:*`). When loaded, cache returns in `< 2ms` (`X-Cache: HIT`). Updates or deletes immediately invalidate the cache.
+![Employee Directory](docs/screenshots/employee-directory.png)
+
+#### 3. Employee Details & Management Modal
+* **What you see**: An interactive modal opened upon clicking any employee card, showcasing contact details, department, status badge, compensation structure (Basic, Allowances, Deductions, Net Monthly), biography notes, and action buttons (`Delete Employee`, `Edit Employee`).
+* **Under the Hood**: Fetches enriched profile and compensation details on demand, enabling seamless HR operations.
+![Employee Detail Modal](docs/screenshots/employee-details-modal.png)
+
+#### 4. Company-Wide Leave Management (API Composition)
+* **What you see**: Company-wide leave applications table with real-time employee search, status filter (`Approved`, `Pending`, `Rejected`), and review actions.
+* **Under the Hood**: Because Attendance and Employee data live in isolated databases, the Attendance Service performs inter-service API composition with the Employee Service to resolve applicant names before rendering.
+![Leave Management](docs/screenshots/leave-management.png)
+
+#### 5. Payslips Generation & History
+* **What you see**: Automated monthly payslip records with employee search, department filters, and one-click PDF payslip downloads.
+* **Under the Hood**: Driven by the dedicated Payroll Microservice. Includes compound unique indexes (`employeeId` + `month` + `year`) preventing duplicate payroll runs.
+![Payslip Management](docs/screenshots/payslip-management.png)
+
+#### 6. Admin Account Settings & Profile
+* **What you see**: Profile customization (Name, Position, Bio) and password update management with live security validation.
+* **Under the Hood**: Managed through Auth Service user credentials and Employee Service profile stores.
+![Admin Settings](docs/screenshots/settings-profile.png)
+
+---
+
+### 👤 Employee Portal & AI Copilot
+
+#### 7. Employee Dashboard (Personalized Metrics)
+* **What you see**: Tailored personal dashboard for logged-in employees showing Days Present, Pending Leaves, and Latest Net Payslip, accompanied by direct quick-action buttons (`Mark Attendance`, `Apply for Leave`).
+* **Under the Hood**: Gateway checks the employee's JWT token, forwards verified headers (`X-User-Id`), and aggregates their personal metrics dynamically.
+![Employee Dashboard](docs/screenshots/employee-dashboard.png)
+
+#### 8. Attendance & Shift Clock-In
+* **What you see**: Daily check-in tracking showing Days Present, Late Arrivals, Average Work Hours, and a prominent `Clock In` action button.
+* **Under the Hood**: Protected by Redis distributed locking to prevent duplicate double-clicks. Clocking in fires an asynchronous `attendance.clocked_in` event to RabbitMQ for Brevo email confirmations.
+![Employee Attendance](docs/screenshots/employee-attendance.png)
+
+#### 9. Employee Leave Requests & Leave Balances
+* **What you see**: Leave balance metric cards breakdown (Sick Leave, Casual Leave, Annual Leave), search bar, and personalized historical leave status.
+* **Under the Hood**: Managed by the Attendance & Leave Service with automated event publishing to RabbitMQ when new requests are submitted.
+![Employee Leave History](docs/screenshots/employee-leave-history.png)
+
+#### 10. Intelligent EMS AI Chatbot (Google Gemini Powered)
+* **What you see**: An interactive floating AI assistant modal with suggested quick questions (*"How many employees are present today?"*, *"How many pending leave requests are there?"*, *"How many employees are in each department?"*) and a natural language input box.
+* **Under the Hood**: Connected to the Chatbot Microservice via Google Gemini 3.8 Flash with an automatic fallback model chain, answering real-time internal HR and leave policy questions.
+![EMS AI Assistant](docs/screenshots/ai-chatbot-assistant.png)
 
 ---
 

@@ -24,13 +24,16 @@ async function testDLQ() {
   console.log("   DEAD LETTER QUEUE & RETRY POLICY VERIFICATION    ");
   console.log("====================================================");
 
-  await initEventBus("dlq-test-worker");
+  const uniqueId = Date.now();
+  const workerName = `dlq-worker-${uniqueId}`;
+  const testRoutingKey = `test.failing_event_${uniqueId}`;
+
+  await initEventBus(workerName);
 
   let attemptCount = 0;
-  const testRoutingKey = "test.failing_event";
 
   await subscribeEvent(
-    "dlq-test-worker",
+    workerName,
     testRoutingKey,
     async (payload) => {
       attemptCount++;
