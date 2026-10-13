@@ -4,6 +4,15 @@ An enterprise-grade **Employee Management System (EMS)** re-architected from a t
 
 ---
 
+## 🌐 Live Deployments
+
+| Component | Platform | Live URL | Status |
+| :--- | :---: | :--- | :---: |
+| **Frontend Application** | **Vercel** | [https://fullstack-ems-nuu3.vercel.app](https://fullstack-ems-nuu3.vercel.app) | ![Vercel](https://img.shields.io/badge/Vercel-Live-success?style=flat&logo=vercel) |
+| **Backend API Gateway** | **Render** | [https://fullstack-ems-s25g.onrender.com](https://fullstack-ems-s25g.onrender.com) | ![Render](https://img.shields.io/badge/Render-Live-success?style=flat&logo=render) |
+
+---
+
 ## 📖 The Story: Before vs. After Architecture
 
 ### 1. BEFORE: The Monolithic Architecture
@@ -113,10 +122,16 @@ The system was decomposed into **6 independent domain microservices**, a dedicat
 
 ## 🔑 Login Credentials for Testing
 
-| Role | Portal URL | Email Address | Password |
-| :--- | :--- | :--- | :--- |
-| **Admin** | `http://localhost:5173/login/admin` | `sadinenibhargav0@gmail.com` | `admin123` |
-| **Employee** | `http://localhost:5173/login/employee` | `emp@gmail.com` | (Registered via Admin) |
+### 🌐 Live Production Portals (Vercel)
+* **Admin Portal**: [https://fullstack-ems-nuu3.vercel.app/login/admin](https://fullstack-ems-nuu3.vercel.app/login/admin)
+* **Employee Portal**: [https://fullstack-ems-nuu3.vercel.app/login/employee](https://fullstack-ems-nuu3.vercel.app/login/employee)
+
+| Role | Live Portal | Email Address | Password | Permissions & Features |
+| :--- | :--- | :--- | :--- | :--- |
+| **Admin** | [Admin Login](https://fullstack-ems-nuu3.vercel.app/login/admin) | `sadinenibhargav0@gmail.com` | `admin123` | Full administrative control: Employee directory, leave approvals, payroll, analytics |
+| **Employee** | [Employee Login](https://fullstack-ems-nuu3.vercel.app/login/employee) | `sbv28012006@gmail.com` | `admin123` | Employee portal: Daily check-in/clock-in, leave application, view payslips, AI chatbot |
+
+*(For local testing, use `http://localhost:5173/login/admin` and `http://localhost:5173/login/employee`)*
 
 ---
 
@@ -314,7 +329,10 @@ The backend runs all distributed microservices orchestrated behind the unified A
    * `GEMINI_API_KEY`: *(Optional)* Your Google Gemini AI API key
    * `SMTP_USER`, `SMTP_PASS`, `SENDER_EMAIL`: *(Optional)* Your Brevo SMTP credentials
 5. Click **Create Web Service**.
-6. Once deployed, copy your Render Web Service URL (e.g., `https://fullstack-ems-backend.onrender.com`).
+6. Once deployed, copy your Render Web Service URL:
+   ```text
+   https://fullstack-ems-s25g.onrender.com
+   ```
 
 > **Tip (Render Blueprint)**: You can also use the included [render.yaml](file:///c:/Notes%20and%20pdf/web%20development%20projects/Fullstack-EMS/render.yaml) file for automated 1-click blueprint deployment.
 
@@ -331,7 +349,11 @@ The backend runs all distributed microservices orchestrated behind the unified A
    * **Output Directory**: `dist`
 4. Expand **Environment Variables** and add:
    * **Key**: `VITE_BASE_URL`
-   * **Value**: Your Render Backend URL from Step 1 (e.g., `https://fullstack-ems-backend.onrender.com`)
+   * **Value**: `https://fullstack-ems-s25g.onrender.com`
 5. Click **Deploy**.
-6. Vercel will install dependencies, build the Vite bundle, and deploy the application with single-page routing rewrites enabled via [client/vercel.json](file:///c:/Notes%20and%20pdf/web%20development%20projects/Fullstack-EMS/client/vercel.json).
+6. Vercel deploys the application live at:
+   ```text
+   https://fullstack-ems-nuu3.vercel.app
+   ```
+   with single-page routing rewrites enabled via [client/vercel.json](file:///c:/Notes%20and%20pdf/web%20development%20projects/Fullstack-EMS/client/vercel.json).
 
