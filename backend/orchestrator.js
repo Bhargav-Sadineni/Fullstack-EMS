@@ -2,20 +2,42 @@ import { spawn } from "child_process";
 import path from "path";
 import { fileURLToPath } from "url";
 import fs from "fs";
-import dotenv from "dotenv";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// Load credentials from root .env or local .env
+function parseEnv(filePath) {
+  try {
+    const env = {};
+    const content = fs.readFileSync(filePath, "utf-8");
+    for (const rawLine of content.split("\n")) {
+      const line = rawLine.trim();
+      if (!line || line.startsWith("#")) continue;
+      const idx = line.indexOf("=");
+      if (idx !== -1) {
+        const key = line.slice(0, idx).trim();
+        let val = line.slice(idx + 1).trim();
+        if ((val.startsWith('"') && val.endsWith('"')) || (val.startsWith("'") && val.endsWith("'"))) {
+          val = val.slice(1, -1);
+        }
+        env[key] = val;
+      }
+    }
+    return env;
+  } catch {
+    return {};
+  }
+}
+
+// Load credentials from root .env or local .env if present
 const rootEnvPath = path.resolve(__dirname, "..", ".env");
 const localEnvPath = path.join(__dirname, ".env");
 let baseEnv = {};
 if (fs.existsSync(rootEnvPath)) {
-  baseEnv = dotenv.parse(fs.readFileSync(rootEnvPath));
+  baseEnv = parseEnv(rootEnvPath);
   console.log(" Loaded credentials from root .env");
 } else if (fs.existsSync(localEnvPath)) {
-  baseEnv = dotenv.parse(fs.readFileSync(localEnvPath));
+  baseEnv = parseEnv(localEnvPath);
   console.log(" Loaded credentials from backend/.env");
 }
 

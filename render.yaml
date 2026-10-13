@@ -4,7 +4,7 @@ services:
     runtime: node
     plan: free
     rootDir: backend
-    buildCommand: node scripts/install-all.js
+    buildCommand: npm install && node scripts/install-all.js
     startCommand: node orchestrator.js
     healthCheckPath: /api/auth/profile
     envVars:

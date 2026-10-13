@@ -301,7 +301,7 @@ The backend runs all distributed microservices orchestrated behind the unified A
    * **Name**: `fullstack-ems-backend`
    * **Root Directory**: `backend`
    * **Runtime**: `Node`
-   * **Build Command**: `node scripts/install-all.js`
+   * **Build Command**: `npm install && node scripts/install-all.js`
    * **Start Command**: `node orchestrator.js`
    * **Instance Type**: Free or Starter
 4. Scroll to **Environment Variables** and add the following keys:
